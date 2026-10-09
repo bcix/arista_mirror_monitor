@@ -1,0 +1,6 @@
+[Path]
+Unit=mapping-monitor.service
+PathChanged=/data/upload/files
+
+[Install]
+WantedBy=multi-user.target

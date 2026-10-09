@@ -125,3 +125,28 @@ systemctl daemon-reload
 systemctl enabled deny-monitor.service
 systemctl start deny-monitor.service
 ```
+
+### Trigger on mapping changes
+
+As soon as a switch updates its mapping file, the Monitor Daemon should
+be reloaded. This can be achieved by using inotify by means of SystemD
+path units.
+
+Copy `mapping-monitor.path` and `mapping-monitor.service` to
+`/etc/systemd/system` and activate those.
+
+```
+systemctl daemon-reload
+systemctl enabled mapping-monitor.{service,path}
+systemctl start mapping-monitor.path
+```
+
+## How it all fits together
+
+1. Upon configuration changes (and thus potential interface mapping
+   changes) EOS will trigger the event handler.
+2. This will cause an update of the mapping file on the monitor host.
+3. Changes to mapping files will trigger the Deny Monitor daemon to
+   re-read those files.
+4. Based on the updated mappings the GRE encapsulated packets will
+   be interpreted and logged to a syslog target.
