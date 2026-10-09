@@ -1,0 +1,12 @@
+[Unit]
+Description=ACL Deny Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/deny-monitor.sh
+
+[Install]
+WantedBy=multi-user.target
