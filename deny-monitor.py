@@ -101,7 +101,7 @@ class LogAggregator:
 
 def handle_sighup(signum, frame):
     print(f"SIGHUP received! Triggering reload...", file=sys.stderr)
-    load_config()
+    read_mappings()
 
 def handle_packet(packet):
     global switch_mappings
